@@ -33,8 +33,6 @@ app.use('/images', express.static(__dirname + '/client/images'));
 app.use('/fonts', express.static(__dirname + '/client/fonts'));
 app.use('/styles', express.static(__dirname + '/public/stylesheets'));
 
-//:::::::::::::::::::::::::::::::::::Balaji:::::::::::::::::::::::::::::::::::::
-
 // Variables ===================================================================
 
 
@@ -72,7 +70,6 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 
 // launch ======================================================================
 
-//:::::::::::::::::::::::::::::::::::Balaji:::::::::::::::::::::::::::::::::::::
 
 // REST Methods=================================================================
 
