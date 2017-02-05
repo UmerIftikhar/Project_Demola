@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Factory Visualization</title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,300italic,400italic,500,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Link these two css files as convenient. Just change the path name if u are keeping it in some other folder -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/page0.css">
+  <!-- End of new css -->
+
+</head>
+
+<body>
+
+  <body>
+    <div class="overlay">
+
+    </div>
+    <div class="modal position">
+
+      <div id='title'>
+        <h2>
+          <span class='TitleText1'>F</span>
+          <span class='TitleText1'>A</span>
+          <span class='TitleText1'>C</span>
+          <span class='TitleText1'>T</span>
+          <span class='TitleText1'>O</span>
+          <span class='TitleText1'>R</span>
+          <span class='TitleText1'>Y</span>
+          <br><br/>
+           <span class='TitleText2'>VISUALIZATION</span> 
+         </h2>
+      </div>
+      <div class="brand login-text">
+        Sign in with your username and password<br><br>
+        <span id='OR'><strong>OR</strong></span><br><br> Sign up for a new account
+      </div>
+
+      <div class="form position">
+        <a href="#"><button class="close">x</button></a>
+        <div class="form-inner">
+          <!-- Sign in Sign Up Tabs-->
+          <div class="tabs">
+            <ul class="tabs">
+              <li class="current" data-tab="member">
+                <a href="#member">SIGN IN</a>
+              </li>
+              <li data-tab="new">
+                <a href="#new">REGISTER</a>
+              </li>
+            </ul>
+
+            <!--Sign in form -->
+            <div class="form-content current" id="member">
+              <form id="sign-in" action="/login" method="post">
+                <input type="text" name="email" id="user" placeholder="EMAIL" class="field" required>
+                <input type="password" name="password" placeholder="PASSWORD" class="field" required>
+                <div class="clear"></div>
+                <button id="submit" name="sign-in-button" class="flat-button signin">Log In</button>
+              </form>
+            </div>
+            
+            <div  class="form-content" id="new">
+ <!--             <form id="reg" action="/sendemail" method="post">	-->
+			<form id="reg" action="/signup" method="post">
+                <!-- new field>
+                <input type="text" name="user" id="user" placeholder="USERNAME" class="field" required>
+                < nw field 1-->
+
+
+                <input type="email" name="email" id="usremail" placeholder="EMAIL ADDRESS" class="field" required>
+                
+				
+				<input type="password" name="password" id="password" placeholder="PASSWORD" class="field" required>
+                <!-- new field 2 -->
+
+                <input type="checkbox" name="promo" id="promo-check" class="check" unchecked required=""><label for="promo-check"
+                  class="check-label secondary-text promo">I accept the <span><a href='#fake'>terms and conditions</a></span></label>
+
+                <!-- new field 2 -->
+
+                <button id="submit" name="register-button" class="flat-button signin">Request</button>
+                <div class="clear"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+
+
+  <!-- Link this new js file , change the path as convenient -->
+  <script src="js/controllers/page0.js"></script>
+
+  <!-- end of new js file -->
+
+
+
+
+</body>
+
+</html>

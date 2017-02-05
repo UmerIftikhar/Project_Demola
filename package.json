@@ -1,0 +1,37 @@
+{
+  "name": "Main",
+  "version": "0.0.0",
+  "description": "Main",
+  "main": "app.js",
+  "author": {
+    "name": "Umeriftikhar",
+    "email": ""
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "latest",
+    "body-parser": "~1.0.0",
+    "connect-flash": "~0.1.1",
+    "cookie-parser": "~1.0.0",
+    "ejs": "~0.8.5",
+    "express": "3.4.4",
+    "express-session": "~1.0.0",
+    "fs": "0.0.2",
+    "http": "0.0.0",
+    "jade": "*",
+    "method-override": "~1.0.0",
+    "mongoose": "~3.8.1",
+    "morgan": "~1.0.0",
+    "node-jsdom": "^3.1.5",
+    "node-uuid": "^1.4.7",
+    "node-rest-client": "*",
+    "nodemailer": "^0.7.1",
+    "passport": "~0.1.17",
+    "passport-facebook": "~1.0.2",
+    "passport-google-oauth": "~0.1.5",
+    "passport-local": "~0.1.6",
+    "passport-twitter": "~1.0.2",
+    "serve-favicon": "*",
+    "socket.io": "^1.4.5",
+    "stylus": "*"
+  }
+}

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<title>Factory Visualization</title>
+
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/custom.css">
+	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="http://static.jquery.com/ui/css/demo-docs-theme/ui.theme.css">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+</head>
+
+<body id="my_body" ng-app="myApp" ng-controller="MyController">
+
+	<div class="left" id='LeftPan'>
+		<span class='TitleText2'><button  id='LeftPanAdjustButton' type="button" class="btn btn-default" aria-label="Left Align">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		</button><br/> Factory<br/> Visualization
+		</span>
+		<!--Tabs for selection between just objects or data based object selection-->
+		<uib-tabset active="activeJustified" justified="true">
+			<uib-tab index="0" heading="Object">
+				<br>
+				<uib-accordion close-others="true">
+					<!-- Drop down for panels -->
+					<div class="dropdown">
+						<button class=" dropdown-toggle TitleText" type="button" data-toggle="dropdown">
+                            panels
+							<span class="caret"></span>
+						</button>
+						<div class="dropdown-menu ">
+							<ul id="drag-elements1" class="drag-elements" style="list-style-type:none">
+								<li data-objectid="panel" data-type="scalable" draggable="true"><div class="drag-elements-li">Panel</div></li>
+							</ul>
+						</div>
+					</div>
+					<!-- Drop down for General objects like label, textbox, image and list box-->
+					<div class="dropdown">
+						<button class=" dropdown-toggle TitleText" type="button" data-toggle="dropdown">
+                            General
+							<span class="caret"></span>
+						</button>
+						<div class="dropdown-menu text-center">
+							<ul id="drag-elements1" class="drag-elements" style="list-style-type:none">
+								<li data-objectid="label" data-type="unscalable" draggable="true"><label for='label' style='font-family: Verdana; color: black;'> textLabel </label></li>
+								<li data-objectid="textBox" data-type="unscalable" draggable="true"><label for='textBox' style='font-family: Verdana; color: black; background-color: #FFFFFF; position:relative; display: inline-block;border: 1px solid #000000; border-radius: 3px;'> SimpleTextBox</label></li>
+								<li data-objectid="listBox" data-type="unscalable" draggable="true">
+									<ul style='font-family: Verdana; color: black; background-color: #FFFFFF; list-style-type:none; border-style: inset; float: left;'>
+										<li>Item0</li>
+										<li>Item1</li>
+									</ul>
+								</li>
+								<p></p>
+								<li data-objectid="image" data-type="scalable" draggable="true"><img src="../images/image.png" height="30px" width="40px"></li>
+							</ul>
+						</div>
+					</div>
+					<!-- Drop down for SVG objects like square, circle, arrow-->
+					<div class="dropdown">
+						<button class=" dropdown-toggle TitleText" type="button" data-toggle="dropdown">
+                            SVG
+							<span class="caret"></span>
+						</button>
+						<div class="dropdown-menu">
+							<ul id="drag-elements1" class="drag-elements" style="list-style-type:none">
+								<li data-objectid="svg-square" data-type="unscalable" draggable="true"><svg width='61' height='61'><rect width='60' height='60' fill='rgba(0,0,0,.7)'></svg></li>
+								<li data-objectid="svg-circle" data-type="unscalable" draggable="true"><svg height='60' width='60'><circle cx='30' cy='30' r='30' fill='rgba(0,0,0,.7)' /></svg></li>
+								<li data-objectid="svg-path" data-type="unscalable" draggable="true"><svg width='60' height='60'><path d='m0,30 h15 v30 h30 V30 h15 L30,0' style='fill:rgba(0,0,0,.7);'/></svg></li>
+							</ul>
+						</div>
+					</div>
+					<!-- Drop down for widget objects like Gauges and Charts -->
+					<div class="dropdown">
+						<button class=" dropdown-toggle TitleText" type="button" data-toggle="dropdown">
+                            Charts & Widgets
+							<span class="caret"></span>
+						</button>
+						<div class="dropdown-menu">
+							<ul id="drag-elements1" class="drag-elements" style="list-style-type:none">
+								<li data-objectid="gauge-3" data-type="scalable" draggable="true"><img src="../images/gaugethree.png" height="70px" width="70px" style="float:left;"></li>
+								<li data-objectid="bar-chart" data-type="scalable" draggable="true"><img src="../images/barchrt.png" height="70px" width="70px"></li>
+								&nbsp; &nbsp; &nbsp; &nbsp;
+								<li data-objectid="candle-chart" data-type="scalable" draggable="true"><img src="../images/candlechrt.png" height="70px" width="70px" style="float:left;"></li>
+								<li data-objectid="ver-bar-chart" data-type="scalable" draggable="true"><img src="../images/verbarChrt.png" height="70px" width="70px"></li>
+							</ul>
+						</div>
+					</div>
+				</uib-accordion>
+			</uib-tab>
+			<uib-tab index='1' select="tabAlert()">
+				<uib-tab-heading>
+					DataPoint
+				</uib-tab-heading>
+				<br>
+				<div>
+					Parent &nbsp;
+				</div>
+				<div>
+					<select class="input-sm" ng-model="dpSelectPanel.parentSelect" ng-change="generateDP()">
+						<option ng-repeat="i in allDP">{{i.id}}</option>
+					</select>
+				</div>
+				<br>
+				<div>
+					Data Point &nbsp;
+				</div>
+				<div>
+					<select class="input-sm" ng-model="dpSelectPanel.dpSelect" ng-change="generateObject()">
+							<option ng-repeat="i in dpSelectPanel.dpList">{{i}}</option>
+						</select>
+				</div>
+				<br>
+				<br>
+				<div>
+					Objects For DataPoint &nbsp;
+				</div>
+				<br>
+				<div style="background: #FFFFFF;border-style: inset;">
+					<!--consits of a list of pretty same objects as explained above and which are rendered as part of data point selection -->
+					<ul id="drag-elements1" class="drag-elements">
+						<li data-objectid="textBox" data-type="unscalable" draggable="true" ng-show="(dpSelectPanel.doubleShow) || (dpSelectPanel.stringShow) || (dpSelectPanel.longShow) || (dpSelectPanel.integerShow)|| (dpSelectPanel.booleanShow)"><label class='mock-text-box' for='textBox' style=' font-family: Verdana; color: black; '>SimpleTextBox</label></li>
+						<li data-objectid="listBox" data-type="unscalable" draggable="true" ng-show="(dpSelectPanel.arrayShow)">
+							<ul style='font-family: Verdana; color: black; background-color: #FFFFFF; list-style-type:none; border-style: inset;'>
+								<li>Item0</li>
+								<li>Item1</li>
+							</ul>
+						</li>
+						<li data-objectid="svg-square" data-type="unscalable" draggable="true" ng-show="dpSelectPanel.booleanShow"><svg width='61' height='61'><rect width='60' height='60' fill='rgba(0,0,0,.7)'/></svg></li>
+						<li data-objectid="svg-circle" data-type="unscalable" draggable="true" ng-show="dpSelectPanel.booleanShow"><svg height='60' width='60'><circle cx='30' cy='30' r='30' fill='rgba(0,0,0,.7)' /></svg></li>
+						<li data-objectid="svg-path" data-type="unscalable" draggable="true" ng-show="dpSelectPanel.booleanShow"><svg width='60' height='60'><path d='m0,30 h15 v30 h30 V30 h15 L30,0' style='fill:rgba(0,0,0,.7);'/></svg></li>
+						<li data-objectid="gauge-3" data-type="scalable" draggable="true" ng-show="(dpSelectPanel.doubleShow) || (dpSelectPanel.integerShow)"><img src="../images/gaugethree.png" height="100px" width="100px"></li>
+						<li data-objectid="candle-chart" data-type="scalable" draggable="true" ng-show="(dpSelectPanel.candleChartShow)"><img src="../images/candlechrt.png" height="100px" width="120px"></li>
+						<li data-objectid="ver-bar-chart" data-type="scalable" draggable="true" ng-show="(dpSelectPanel.verBarChartShow)"><img src="../images/verbarChrt.png" height="100px" width="120px"></li>
+						<li data-objectid="bar-chart" data-type="scalable" draggable="true" ng-show="(dpSelectPanel.barChartShow)"><img src="../images/barchrt.png" height="100px" width="120px"></li>
+					</ul>
+				</div>
+			</uib-tab>
+		</uib-tabset>
+		<hr />
+	</div>
+
+	<div id="main_ui" class="main" ng-style="mainPanelStyle">
+		<!-- Initial Screen which consists the description of how to work with -->
+		<div id="initial_help" ng-show="initialPanel">
+			<a href="#"><button class="close" ng-click="overviewPanelClose()">x&nbsp;</button></a>
+			<img src="../images/overview.png" width="100%" height="90%" alt="FV">
+			<div class="text-center">
+			<button type="button" class="btn btn-success" ng-click="overviewPanelClose()">
+				Start &nbsp;
+	        	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        	</button>
+			</div>
+		</div>
+		<!-- Button which is dispalyed while the property panel is minimised-->
+		<div ng-click="propertyPanelShow()" class="propButton" ng-show="propertyPanel.minimize">
+			Properties
+		</div>
+		<!-- Property panel and its setting base objects-->
+		<div id="propSettingPanel" ng-show="propertyPanel.panel">
+			<!-- buttons for panel operation-->
+			<a href="#"><button class="close" ng-click="propertyPanelClose()">x&nbsp;</button></a>
+			<a href="#"><button class="close" ng-click="propertyPanelMinimize()">_&nbsp;</button></a>
+			<a href="#"><button class="close" ng-click="propertyInfo()">i&nbsp;</button></a>
+			<!-- Layer that will hold the buttons-->
+			<div id="propOptions">
+				<div class="propertyMenu" ng-click="showGeneral()" ng-style="propertyPanel.generalButtonStyle" ng-show="propertyPanel.generalOption" uib-popover="General elements like Name/ID for an object" popover-trigger="mouseenter">
+					General
+				</div>
+				<div class="propertyMenu" ng-click="showFont()" ng-style="propertyPanel.fontButtonStyle" ng-show="propertyPanel.fontOption" uib-popover="Font properties for an object like Font Family/Color/Size" popover-trigger="mouseenter">
+					Font
+				</div>
+				<div class="propertyMenu" ng-click="showBG()" ng-style="propertyPanel.bgButtonStyle" ng-show="propertyPanel.bgOption" uib-popover="Background option for an object like background color/image" popover-trigger="mouseenter">
+					BackGround
+				</div>
+				<div class="propertyMenu" ng-click="showShape()" ng-style="propertyPanel.shapeButtonStyle" ng-show="propertyPanel.shapeOption" uib-popover="Shape modifications of an object like rotation/size(length and bredth)" popover-trigger="mouseenter">
+					Shape
+				</div>
+				<div class="propertyMenu" ng-click="showDP()" ng-style="propertyPanel.dpButtonStyle" ng-show="propertyPanel.dpOption" uib-popover="Data point mapping for an object basically the parent and the data" popover-trigger="mouseenter">
+					Data Point
+				</div>
+				<div class="propertyMenu" ng-click="showSpecial()" ng-style="propertyPanel.specialButtonStyle" ng-show="propertyPanel.specialOption" uib-popover="Special options for an object (It varies for each object. More options can be fond in each help of object)" popover-trigger="mouseenter">
+					Specials
+				</div>
+				<div class="propertyMenu" ng-click="showConnection()" ng-style="propertyPanel.conncetionButtonStyle" ng-show="propertyPanel.connectionOption" uib-popover="Connection specific details for an object (usually connection url to a different page)" popover-trigger="mouseenter">
+					Connections
+				</div>
+			</div>
+			<div id="propDisplay">
+				<div ng-show="propertyPanel.generalShow">
+					<!-- Name of the object-->
+					<input type="text" placeholder="Object Name/ID" class="input-sm" ng-model="propertyPanel.name">
+				</div>
+				<div ng-show="propertyPanel.fontShow">
+					<!-- Font Family -->
+					<select class="input-sm" ng-model="propertyPanel.font">
+						<option ng-repeat="i in propertyPanel.fontList">{{i}}</option>
+					</select>
+					<br/>
+					<br/>
+					<!-- Font Color -->
+					<select class="input-sm" ng-model="propertyPanel.color">
+						<option ng-repeat="i in propertyPanel.colorList">Font-Color : {{i}}</option>
+					</select>
+					<br/>
+					<br/>
+					<!-- Font Size -->
+					Font Size &nbsp;&nbsp;&nbsp;
+					<input type="number" class="input-sm" ng-model="propertyPanel.fontSize" min="1" max="100">
+					<br/>
+					<br/>
+				</div>
+				<div ng-show="propertyPanel.bgShow">
+					<!-- Background Color -->
+					<select class="input-sm" ng-model="propertyPanel.backgroundColor" ng-show="!propertyPanel.imageProp">
+						<option ng-repeat="i in propertyPanel.colorList">Background-Color : {{i}}</option>
+					</select>
+					<br/>
+					<br/>
+					<!-- Url for the image type objects -->
+					<input type="text" placeholder="Url" class="input-sm" ng-model="propertyPanel.url" ng-show="propertyPanel.imageProp">
+				</div>
+				<div ng-show="propertyPanel.dpShow">
+					<!-- parent element of data point (eg. phase1) -->
+					<select class="input-sm" ng-model="propertyPanel.parent" ng-change="generatePropDP()">
+						<option ng-repeat="i in allDP">Parent : {{i.id}}</option>
+					</select>
+					<br/>
+					<br/>
+					<!-- Data Point -->
+					<select class="input-sm" ng-model="propertyPanel.dataPoint">
+						<option ng-repeat="i in propertyPanel.dpList">DP : {{i}}</option>
+					</select>
+				</div>
+				<div ng-show="propertyPanel.shapeShow">
+					<div class="row">
+						<div class="col-md-1 col-lg-1">
+							Rotate Object
+						</div>
+						<div class="col-md-1 col-lg-1">
+						</div>
+						<div class="col-md-9 col-lg-9">
+							<!--Slider for adjusting the angle-->
+							<input type="range" min="0" max="360" step="10" onchange="showValue(this.value)" ng-model="propertyPanel.degree" />
+							<!--Showing current value of the slider-->
+							&nbsp;{{propertyPanel.degree}}
+						</div>
+					</div>
+					<br/>
+					<br/>
+					<div ng-show="propertyPanel.widthHeightShow">
+						Width(px)&nbsp;&nbsp;&nbsp;
+						<input type="number" ng-model="propertyPanel.width" min="1">
+						<br/>
+						<br/>
+						<!-- Property objects for SVG Square -->
+						<span> Height(px) </span>&nbsp;&nbsp;&nbsp;
+						<input type="number" ng-model="propertyPanel.height" min="1">
+						<br/>
+						<br/>
+					</div>
+					<div ng-show="(!propertyPanel.imageProp) && (propertyPanel.radiusShow)">
+						<!-- Property objects for SVG Circle -->
+						<span> radius(px) </span>&nbsp;&nbsp;&nbsp;
+						<input type="number" ng-model="propertyPanel.radius" min="1">
+						<br/>
+						<br/>
+					</div>
+					<div ng-show="(!propertyPanel.imageProp) && (propertyPanel.zoomShow)">
+						<!-- Property objects for SVG Path -->
+						<span> zoom(%) </span>&nbsp;&nbsp;&nbsp;
+						<input type="number" ng-model="propertyPanel.zoom" min="1">
+					</div>
+				</div>
+				<div ng-show="propertyPanel.specialShow">
+					<!-- button to choose between Map / Array for List type of Objects-->
+					<div class="row" ng-show="propertyPanel.listShow">
+						<div class="col-md-12 col-lg-12 text-right">
+							<button type="button" class="btn btn-primary" ng-model="propertyPanel.minMaxPresence" uib-btn-checkbox ng-click="arrayMapDPGenerate(propertyPanel.custButtonLabel)">
+        						{{propertyPanel.custButtonLabel}}
+    						</button>
+						</div>
+						<br/>
+					</div>
+					<!-- Units in case of Gauge or tanks-->
+					<div ng-show="propertyPanel.gaugeShow">
+						<input type="text" placeholder="Units" class="input-sm" ng-model="propertyPanel.units">
+						<br/>
+					</div>
+					<!-- Check box button which changes functionality for many objects-->
+					<div ng-show="propertyPanel.checkBoxShow">
+						<input type="checkbox" ng-model="propertyPanel.checkBoxState"> {{propertyPanel.checkBoxLabel}}<br>
+						<br/>
+					</div>
+					<div ng-show="(!propertyPanel.minMaxPresence) && (!propertyPanel.checkBoxState)">
+						No of Rows &nbsp; &nbsp;&nbsp;
+						<input type="number" ng-model="propertyPanel.rowNos" min="1" max="100">
+						<br/>
+					</div>
+					<div class="row" ng-show="(propertyPanel.minMaxPresence) && (!propertyPanel.checkBoxState)">
+						<!-- Nominal properties it changes for each object type -->
+						{{propertyPanel.nomLabel}} &nbsp;&nbsp;&nbsp;
+						<input type="number" ng-model="propertyPanel.nomValue">
+						<br/>
+						<br/>
+						<select class="input-sm" ng-model="propertyPanel.nomColor">
+							<option ng-repeat="i in propertyPanel.colorList">{{propertyPanel.nomColorLabel}} : {{i}}</option>
+						</select>
+						<br/>
+						<br/>
+						<!-- Maximum propertis it changes for each object type -->
+						{{propertyPanel.maxLabel}} &nbsp;&nbsp;&nbsp;
+						<input type="number" ng-model="propertyPanel.maxValue">
+						<br/>
+						<br/>
+						<select class="input-sm" ng-model="propertyPanel.maxColor">
+							<option ng-repeat="i in propertyPanel.colorList">{{propertyPanel.maxColorLabel}} : {{i}}</option>
+						</select>
+						<br/>
+						<br/>
+						<!-- Minimum Properties it changes for each object type -->
+						<div ng-show="propertyPanel.minShow">
+							{{propertyPanel.minLabel}} &nbsp;&nbsp;&nbsp;
+							<input type="number" ng-model="propertyPanel.minValue">
+							<br/>
+							<br/>
+							<select class="input-sm" ng-model="propertyPanel.minColor">
+								<option ng-repeat="i in propertyPanel.colorList">{{propertyPanel.minColorLabel}} : {{i}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div ng-show="propertyPanel.connectionShow">
+					<!-- Name of the object-->
+					<input type="text" placeholder="PageUrl" class="input-sm" ng-model="propertyPanel.pageUrl">
+				</div>
+			</div>
+			<div id="propOKButton">
+				<button type="button" class="TitleText" ng-click="assignProperties()">OK</button>
+			</div>
+		</div>
+		<!-- Button in the left which adjusts the screen to full screen-->
+		<button id='LeftPanAdjustButton2' type="button" class="btn btn-default not" aria-label="Left Align">
+	        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        </button>
+		<!-- Functionality with respect to menu items -->
+		<nav role="navigation" id='UIMenu'>
+			<h1><span id="MenuText">Menu</span></h1>
+			<ol id='mainUImenu'>
+				<li class='list' ng-click="createPanelShow()"><a href="#">Create</a></li>
+				<li class='list'><a href="#">Save</a></li>
+				<li class='list' ng-click="settingPanelShow()"><a href="#">Settings</a></li>
+			</ol>
+		</nav>
+		<!-- Items (background, grid) in the setting panels -->
+		<div id="settPanel" ng-show="settingPanel.panelShow">
+			<a href="#"><button class="close" ng-click="settingPanelClose()">x&nbsp;</button></a>
+			<div class="text-center">
+				<span class="TitleText2"> SETTINGS </span>
+			</div>
+			<uib-tabset active="active" id='LeftSettings'>
+				<uib-tab index='0' heading="Grid">
+					<button type="button" class="TitleText" ng-model="gridDetails.hide" ng-click="showHideGrid()" uib-btn-checkbox>
+					{{gridDetails.value}}
+				</button>
+					</br>
+					<!-- <span>Grid Color</span> -->
+					<select class="input-sm TitleText" ng-model="gridDetails.colorSelect" ng-change="gridColorChange()">
+						<option selected="selected" >Grid Color: BLACK</option>
+						<option>Grid Color: WHITE</option>
+						</select>
+				</uib-tab>
+				<uib-tab index='1' heading="Background">
+					<div class="text-center mt-bot-20">
+						<input type="text" ng-model="newimagepath.url" placeholder="Image URL">
+					</div>
+					<button type="button" class="TitleText" ng-click="setBackground()">CHANGE</button>
+				</uib-tab>
+			</uib-tabset>
+		</div>
+		<!-- Panel with options to create screen -->
+		<div id="CreatePop" ng-show="creationPanel.panelShow">
+			<a href="#"><button class="close" ng-click="createPanelClose()">x&nbsp;</button></a>
+			<br/>
+			<span class="TitleText2"> &nbsp; &nbsp;  CONFIRM CREATION</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+			<input type="text" name="name" placeholder="Screen Name" class="input-sm" ng-model="screenName" required> &nbsp; &nbsp;
+			&nbsp;
+			<button class="btn btn-success" ng-click="createScreen()">Confirm</button>
+			<br/>
+			<br/> ! This name will be used as the address endpoint so please no 'space' or 'special Characters'
+		</div>
+		<!-- Space where the obejects are dropped -->
+		<div id="drop-target-one" ng-style="dropTargetOne.style">
+		</div>
+	</div>
+
+	<div id="menu">
+		<a onclick="removeCustomMenu(this)">
+			<img src="http://puu.sh/nr60s/42df867bf3.png" /> Delete Element
+		</a>
+		<a onclick="showDoubleMenu(this)">
+			<img src="http://puu.sh/nr5Z6/4360098fc1.png" /> Properties
+		</a>
+	</div>
+</body>
+
+<script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="js/controllers/angular.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+<script>
+	var elementDragged = null;	var right_global; var test_data; var double_Click, left_global;
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/controllers/jquery.ui.core.js"></script>
+<script src="js/controllers/jquery.ui.widget.js"></script>
+<script src="js/controllers/jquery.ui.mouse.js"></script>
+<script src="js/controllers/jquery.ui.draggable.js"></script>
+<script src="js/controllers/ui-bootstrap-tpls-1.3.2.min.js"></script>
+<script src="js/controllers/bootstrap.min.js"></script>
+<script src="js/controllers/customScripts.js"></script>
+<script src="js/controllers/angularCodes.js"></script>
+<script type="text/javascript" src="js/controllers/multidraggable.js"></script>
+
+</html>
+
+<script>
+	// The functionality is used in order to hide the drop down menu while some item is being clicked
+	var menu_item = document.getElementById("menu").style;
+	document.addEventListener('click', function(e) {
+		menu_item.opacity ="0";
+		setTimeout(function() {
+			menu_item.visibility ="hidden";
+		});
+	}, false);
+	
+	$('#drop-target-one').click(function(e){
+		//console.log($(e.target).is('#drop-target-one'));
+		if($(e.target).is('#drop-target-one')){
+			if(left_global!=undefined){
+				var inner_el = $(left_global);
+				$(inner_el.children()[0]).css("outline","");
+			}
+		}				
+		socket.emit("panelVisibilityOnClick",{});
+		//left_global.style.outline="";
+		right_global=null;
+	});
+
+</script>
